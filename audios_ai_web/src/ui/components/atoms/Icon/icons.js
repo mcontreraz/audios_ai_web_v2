@@ -3,7 +3,10 @@ import {
     faHome,
     faUser,
     faFile,
-    faUpload
+    faUpload,
+    faFlag,
+    faBars,
+    faEye,
     // importa otros íconos que necesitarás
   } from '@fortawesome/free-solid-svg-icons';
   
@@ -11,7 +14,10 @@ import {
     home: faHome,
     user: faUser,
     file: faFile,
-    upload: faUpload
+    upload: faUpload,
+    flag: faFlag,
+    hamburger: faBars,
+    eye: faEye
     // agrega otros íconos aquí
   };
   

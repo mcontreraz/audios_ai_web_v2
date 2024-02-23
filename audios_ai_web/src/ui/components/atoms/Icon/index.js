@@ -9,7 +9,6 @@ const Icon = ({ iconName, className, onClick }) => {
 };
 
 Icon.propTypes = {
-  icon: PropTypes.object.isRequired,
   className: PropTypes.string,
   onClick: PropTypes.func,
 };
@@ -20,3 +19,4 @@ Icon.defaultProps = {
 };
 
 export default Icon;
+  

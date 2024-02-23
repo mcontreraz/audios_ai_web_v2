@@ -9,8 +9,8 @@ const Sidebar = () => {
     <Wrapper>
       <Nav vertical>
         <MenuItem icon="home" text="Dashboard" to="/" />
-        <MenuItem icon="upload" text="Lista de Trabajos" to="/files" />
-        <MenuItem icon="upload" text="Subir archivo" to="/upload" />
+        <MenuItem icon="upload" text="Lista de Trabajos" to="/jobList" />
+        <MenuItem icon="upload" text="Subir archivo" to="/uploadFile" />
         {/* Repite para los demás enlaces */}
       </Nav>
     </Wrapper>

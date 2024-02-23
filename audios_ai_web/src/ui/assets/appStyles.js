@@ -7,7 +7,6 @@ const AppLayout = styled.div`
 
 const MainContent = styled.div`
   flex-grow: 1;
-  padding: 1rem;
 `;
 
 export { AppLayout, MainContent };

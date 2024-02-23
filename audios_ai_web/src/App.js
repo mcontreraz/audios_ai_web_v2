@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { authProtectedRoutes, publicRoutes } from "./routes";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+import Header from "./ui/components/organisms/Header";
 import Sidebar from "./ui/components/organisms/Sidebar";
 
 import { AppLayout, MainContent } from "./ui/assets/appStyles";
-import HeaderTemplate from "./ui/components/organisms/Header";
 
 const App = () => {
   return (
@@ -14,7 +13,7 @@ const App = () => {
       <AppLayout>
         <Sidebar />
         <MainContent>
-          <HeaderTemplate />
+          <Header />
           <Routes>
             {/* Rutas públicas */}
             {publicRoutes.map((route, idx) => (
