@@ -1,61 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import JobListTemplate from "../../components/templates/JobList";
 
+import { useDispatch } from "react-redux";
+import { jobListActions } from "../../../application/actions/jobList";
+import { transcriptedJobsActions } from "../../../application/actions/transcriptedJobs";
+
+import { convertirFormatoFecha, shortenString } from "../../utils/functions";
+
 const JobListContainer = () => {
-  const jobs = [
-    {
-      "id": 1,
-      "name": "Job 1",
-      "status": "Completed"
-    },
-    {
-      "id": 2,
-      "name": "Job 2",
-      "status": "In Progress"
-    },
-    {
-      "id": 3,
-      "name": "Job 3",
-      "status": "Failed"
-    },
-    {
-      "id": 4,
-      "name": "Job 4",
-      "status": "Completed"
-    },
-    {
-      "id": 5,
-      "name": "Job 5",
-      "status": "In Progress"
-    },
-    {
-      "id": 6,
-      "name": "Job 6",
-      "status": "Failed"
-    },
-    {
-      "id": 7,
-      "name": "Job 7",
-      "status": "Completed"
-    },
-    {
-      "id": 8,
-      "name": "Job 8",
-      "status": "In Progress"
-    },
-    {
-      "id": 9,
-      "name": "Job 9",
-      "status": "Failed"
-    },
-    {
-      "id": 10,
-      "name": "Job 10",
-      "status": "Completed"
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(jobListActions.fetchJobList());
+  }, [dispatch]);
+
+  const jobsList = useSelector((state) => state.jobList.jobs.data);
+
+  const jobs = jobsList.map((job) => {
+    return {
+      id: job.id,
+      name: job.filename,
+      status: job.status,
+      created_at: convertirFormatoFecha(job.created_at),
+    };
+  });
+
+  const transcriptionString = useSelector(
+    (state) => state?.transcriptedJobs?.data?.transcription
+  );
+
+  const handleClick = (id) => {
+    dispatch(transcriptedJobsActions.fetchTranscriptedJobById(id));
+    setMessage(`Previa de la transcripción: ${transcriptionString && shortenString(transcriptionString)}...`);
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
     }
-  ]
-  
-  return <JobListTemplate jobs={jobs}/>;
+    setOpen(false);
+  };
+
+  return (
+    <JobListTemplate
+      jobs={jobs}
+      handleClick={handleClick}
+      handleClose={handleClose}
+      open={open}
+      message={message}
+    />
+  );
 };
 
 export default JobListContainer;
