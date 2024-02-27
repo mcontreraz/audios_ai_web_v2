@@ -8,9 +8,10 @@ import store from "./application/store";
 import Header from "./ui/components/organisms/Header";
 import Sidebar from "./ui/components/organisms/Sidebar";
 
+import "./ui/assets/fonts/fonts.css";
 import { AppLayout, MainContent } from "./ui/assets/appStyles";
 
-const App = () => {
+const App = (pageTitle) => {
   return (
     <Provider store={store}>
       <Router>

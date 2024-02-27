@@ -10,7 +10,9 @@ import { convertirFormatoFecha, shortenString } from "../../utils/functions";
 
 const JobListContainer = () => {
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const dispatch = useDispatch();
 
@@ -29,13 +31,17 @@ const JobListContainer = () => {
     };
   });
 
+  const paginatedJobs = jobs.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+
   const transcriptionString = useSelector(
     (state) => state?.transcriptedJobs?.data?.transcription
   );
 
   const handleClick = (id) => {
     dispatch(transcriptedJobsActions.fetchTranscriptedJobById(id));
-    setMessage(`Previa de la transcripción: ${transcriptionString && shortenString(transcriptionString)}...`);
     setOpen(true);
   };
 
@@ -46,13 +52,23 @@ const JobListContainer = () => {
     setOpen(false);
   };
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); // Vuelve a la primera página con la nueva cantidad de filas
+  };
+
   return (
     <JobListTemplate
-      jobs={jobs}
-      handleClick={handleClick}
-      handleClose={handleClose}
-      open={open}
-      message={message}
+      jobs={paginatedJobs}
+      page={page}
+      rowsPerPage={rowsPerPage}
+      count={jobs.length}
+      handleChangePage={handleChangePage}
+      handleChangeRowsPerPage={handleChangeRowsPerPage}
     />
   );
 };

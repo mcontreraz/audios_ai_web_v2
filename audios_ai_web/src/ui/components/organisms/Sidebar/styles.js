@@ -2,10 +2,10 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  background-color: #343a40;
+  background-color: #2A3042;
   color: white;
-  max-width: 250px;
   height: 100vh;
+  min-width: 15vw;
 `;
 
 // Usarías estos componentes estilizados en lugar de los elementos HTML regulares y los componentes de Reactstrap.

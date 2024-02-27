@@ -4,15 +4,15 @@ import { NavLink } from "react-router-dom";
 
 export const Wrapper = styled.li`
   a {
-    color: white;
+    color: #697187;
     text-decoration: none;
     display: flex;
     align-items: center;
-    padding: 0.2rem 1rem;
+    padding: 0.2rem 1rem 0.5rem;
 
     &:hover,
     &.active {
-      background-color: #495057; // Color de fondo para el ítem activo o en hover
+      color: white; // Color de fondo para el ítem activo o en hover
     }
   }
 

@@ -7,6 +7,7 @@ import {
     faFlag,
     faBars,
     faEye,
+    faTrash,
     // importa otros íconos que necesitarás
   } from '@fortawesome/free-solid-svg-icons';
   
@@ -17,7 +18,8 @@ import {
     upload: faUpload,
     flag: faFlag,
     hamburger: faBars,
-    eye: faEye
+    eye: faEye,
+    trash: faTrash
     // agrega otros íconos aquí
   };
   

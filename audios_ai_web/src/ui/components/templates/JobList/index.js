@@ -1,63 +1,110 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Snackbar from "@mui/material/Snackbar";
+import React from "react";
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TablePagination,
+  Grid,
+  TextField,
+} from "@mui/material";
+import Icon from "../../atoms/Icon"; // Asumiendo que tienes un componente Icon
+import TextInput from "../../molecules/TextInput";
+import PageTitle from "../../atoms/PageTitle";
 
-const createData = (id, name, status, created_at) => {
-  return { id, name, status, created_at };
-};
-
-const JobListTemplate = ({ jobs, handleClick, handleClose, open, message }) => {
-  const rows = jobs.map((job) =>
-    createData(job.id, job.name, job.status, job.created_at)
-  );
-
+const JobListTemplate = ({
+  jobs,
+  page,
+  rowsPerPage,
+  count,
+  handleChangePage,
+  handleChangeRowsPerPage,
+}) => {
   return (
-    <Box display="flex" justifyContent="center" paddingTop={5}>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message={message}
-      />
-      <TableContainer component={Paper} sx={{ maxWidth: "80%" }}>
-        <Table size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Archivo</TableCell>
-              <TableCell align="right">Estado</TableCell>
-              <TableCell align="right">Fecha Creación</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{
-                  "&:hover": {
-                    backgroundColor: "rgba(0, 0, 0, 0.04)", // color de fondo en el hover
-                  },
-                  cursor: "pointer", // Cambia el cursor a un puntero para indicar que es clickeable
-                }}
-                onClick={() => handleClick(row.id)} // Manejador de clic para la fila
-              >
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.status}</TableCell>
-                <TableCell align="right">{row.created_at}</TableCell>
+    <div className="container">
+      <PageTitle title="Archivos" />
+      <div className="row d-flex justify-content-center">
+        <div className="row">
+          <div className="col-6">
+            <TextInput label="Buscar" className={"mb-4"} />
+          </div>
+        </div>
+        <TableContainer
+          component={Paper}
+          sx={{ maxWidth: "90%" }}
+          className="table bordered shadow rounded"
+        >
+          <Table size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Archivo</TableCell>
+                <TableCell align="right">Fecha Creación</TableCell>
+                <TableCell align="right">Acciones</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+            </TableHead>
+            <TableBody>
+              {jobs.map((job) => (
+                <TableRow
+                  className="table-row"
+                  key={job.id}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: "rgba(0, 0, 0, 0.04)",
+                    },
+                    cursor: "pointer",
+                    fontFamily: "Poppins",
+                    fontSize: "0.9rem",
+                  }}
+                  // onClick={() => handleClick(row.id)} // Puedes pasar la función handleClick si es necesario
+                >
+                  <TableCell component="th" scope="row">
+                    {job.name}
+                  </TableCell>
+                  <TableCell align="right">{job.created_at}</TableCell>
+                  <TableCell align="right">
+                    <Icon iconName="eye" className={"px-2 text-primary"} />
+                    <Icon iconName="trash" className={"px-2 text-danger"} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={count}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </div>
+    </div>
+
+    // <Box display="flex" flexDirection="column">
+    //   <Box display="flex" justifyContent="start" paddingTop={3}>
+    //     Page Title
+    //   </Box>
+
+    //   <Box sx={{ flexGrow: 1 }}>
+    //     <Grid container spacing={2}>
+    //       <Grid item xs={12} sm={6} md={5} lg={3}>
+    //         <TextField label="Buscar" variant="standard" fullWidth />
+    //       </Grid>
+    //     </Grid>
+    //   </Box>
+    //   <Box display="flex" justifyContent="center" paddingTop={5}>
+
+    //   </Box>
+    //   <Box display="flex" justifyContent="center" paddingTop={5}>
+
+    //   </Box>
+    // </Box>
   );
 };
 
