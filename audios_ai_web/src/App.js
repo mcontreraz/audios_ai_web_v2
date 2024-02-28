@@ -8,31 +8,32 @@ import store from "./application/store";
 import Header from "./ui/components/organisms/Header";
 import Sidebar from "./ui/components/organisms/Sidebar";
 
-import "./ui/assets/fonts/fonts.css";
 import { AppLayout, MainContent } from "./ui/assets/appStyles";
+import "./ui/assets/fonts/fonts.css";
+
 
 const App = (pageTitle) => {
   return (
     <Provider store={store}>
-      <Router>
-        <AppLayout>
-          <Sidebar />
-          <MainContent>
-            <Header />
-            <Routes>
-              {/* Rutas públicas */}
-              {publicRoutes.map((route, idx) => (
-                <Route path={route.path} element={route.element} key={idx} />
-              ))}
+        <Router>
+          <AppLayout>
+            <Sidebar />
+            <MainContent>
+              <Header />
+              <Routes>
+                {/* Rutas públicas */}
+                {publicRoutes.map((route, idx) => (
+                  <Route path={route.path} element={route.element} key={idx} />
+                ))}
 
-              {/* Rutas protegidas (que por ahora no requieren autenticación) */}
-              {authProtectedRoutes.map((route, idx) => (
-                <Route path={route.path} element={route.element} key={idx} />
-              ))}
-            </Routes>
-          </MainContent>
-        </AppLayout>
-      </Router>
+                {/* Rutas protegidas (que por ahora no requieren autenticación) */}
+                {authProtectedRoutes.map((route, idx) => (
+                  <Route path={route.path} element={route.element} key={idx} />
+                ))}
+              </Routes>
+            </MainContent>
+          </AppLayout>
+        </Router>
     </Provider>
   );
 };

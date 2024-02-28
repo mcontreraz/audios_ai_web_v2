@@ -8,22 +8,15 @@ import {
   TableHead,
   TableRow,
   Paper,
-  TablePagination,
-  Grid,
-  TextField,
+  Pagination,
+  Typography,
+  Stack,
 } from "@mui/material";
 import Icon from "../../atoms/Icon"; // Asumiendo que tienes un componente Icon
 import TextInput from "../../molecules/TextInput";
 import PageTitle from "../../atoms/PageTitle";
 
-const JobListTemplate = ({
-  jobs,
-  page,
-  rowsPerPage,
-  count,
-  handleChangePage,
-  handleChangeRowsPerPage,
-}) => {
+const JobListTemplate = ({ jobs, page, handleChangePage, totalPages }) => {
   return (
     <div className="container">
       <PageTitle title="Archivos" />
@@ -35,7 +28,7 @@ const JobListTemplate = ({
         </div>
         <TableContainer
           component={Paper}
-          sx={{ maxWidth: "90%" }}
+          sx={{ maxWidth: "90%", paddingBottom: "40px" }}
           className="table bordered shadow rounded"
         >
           <Table size="small" aria-label="a dense table">
@@ -74,37 +67,24 @@ const JobListTemplate = ({
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={count}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        <div className="row">
+          <div className="col">
+            <Stack spacing={2}>
+              <Pagination
+                variant="outlined"
+                shape="rounded"
+                count={totalPages}
+                page={page}
+                onChange={handleChangePage}
+                labelDisplayedRows={({ from, to, count }) =>
+                  `${from}-${to} de ${count}`
+                }
+              />
+            </Stack>
+          </div>
+        </div>
       </div>
     </div>
-
-    // <Box display="flex" flexDirection="column">
-    //   <Box display="flex" justifyContent="start" paddingTop={3}>
-    //     Page Title
-    //   </Box>
-
-    //   <Box sx={{ flexGrow: 1 }}>
-    //     <Grid container spacing={2}>
-    //       <Grid item xs={12} sm={6} md={5} lg={3}>
-    //         <TextField label="Buscar" variant="standard" fullWidth />
-    //       </Grid>
-    //     </Grid>
-    //   </Box>
-    //   <Box display="flex" justifyContent="center" paddingTop={5}>
-
-    //   </Box>
-    //   <Box display="flex" justifyContent="center" paddingTop={5}>
-
-    //   </Box>
-    // </Box>
   );
 };
 
