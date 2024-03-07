@@ -1,4 +1,3 @@
-// src/infrastructure/services/jobList/index.js
 import { put, call, takeLatest, spawn } from 'redux-saga/effects';
 
 // Importa las acciones específicas de éxito y error

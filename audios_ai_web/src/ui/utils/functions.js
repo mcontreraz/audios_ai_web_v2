@@ -1,4 +1,4 @@
-function convertirFormatoFecha(fechaStr) {
+function formatDate(fechaStr) {
     const fecha = new Date(fechaStr);
     const anio = fecha.getFullYear();
     const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
@@ -23,4 +23,14 @@ function shortenString(text) {
     return shortenedText;
   }
 
-export { convertirFormatoFecha, shortenString }
+  function formatDuration(seconds) {
+    const pad = (num) => num.toString().padStart(2, '0');
+    let hours = Math.floor(seconds / 3600);
+    let minutes = Math.floor((seconds % 3600) / 60);
+    let secs = Math.floor(seconds % 60);
+
+    return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
+}
+
+
+export { formatDate, shortenString, formatDuration }

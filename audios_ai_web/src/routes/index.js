@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 
 import Dashboard from "../ui/pages/Dashboard";
 import JobList from "../ui/pages/JobList";
+import JobResult from "../ui/pages/JobResult";
 import UploadFile from "../ui/pages/UploadFile";
 
 const authProtectedRoutes = [
@@ -17,6 +18,10 @@ const authProtectedRoutes = [
   {
     path: "/uploadFile",
     element: <UploadFile />,
+  },
+  {
+    path: "/jobResult/:id",
+    element: <JobResult />,
   },
 ];
 

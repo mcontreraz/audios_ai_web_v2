@@ -8,15 +8,25 @@ const apiTranscriptedJobs = api(process.env.REACT_APP_TRANSCRIBE_API);
 
 export function* fetchTranscriptedJobById(action) {
   try {
-    const transcriptedJob = yield call(apiTranscriptedJobs.get, `/transcripted-jobs/${action.payload}`);
-    yield put(transcriptedJobsActions.fetchTranscriptedJobByIdSuccess(transcriptedJob));
+    const transcriptedJob = yield call(
+      apiTranscriptedJobs.get,
+      `/transcripted-jobs/${action.payload}`
+    );
+    yield put(
+      transcriptedJobsActions.fetchTranscriptedJobByIdSuccess(transcriptedJob)
+    );
   } catch (error) {
-    yield put(transcriptedJobsActions.fetchTranscriptedJobByIdError(error.toString()));
+    yield put(
+      transcriptedJobsActions.fetchTranscriptedJobByIdError(error.toString())
+    );
   }
 }
 
 function* watchFetchTranscriptedJobById() {
-  yield takeLatest(transcriptedJobsActions.fetchTranscriptedJobById, fetchTranscriptedJobById);
+  yield takeLatest(
+    transcriptedJobsActions.fetchTranscriptedJobById,
+    fetchTranscriptedJobById
+  );
 }
 
 export default function* transcriptedJobsSaga() {

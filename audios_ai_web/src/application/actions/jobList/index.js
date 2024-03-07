@@ -31,7 +31,6 @@ const jobListSlice = createSlice({
     }
 });
 
-// Exportar correctamente las acciones y el reducer.
-// Si necesitas exportar fetchJobList, asegúrate de incluirla aquí también.
+
 export const jobListActions = { ...jobListSlice.actions, fetchJobList };
 export default jobListSlice.reducer;

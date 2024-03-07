@@ -16,7 +16,7 @@ import Icon from "../../atoms/Icon"; // Asumiendo que tienes un componente Icon
 import TextInput from "../../molecules/TextInput";
 import PageTitle from "../../atoms/PageTitle";
 
-const JobListTemplate = ({ jobs, page, handleChangePage, totalPages }) => {
+const JobListTemplate = ({ jobs, page, handleChangePage, totalPages, handleClickJob }) => {
   return (
     <div className="container">
       <PageTitle title="Archivos" />
@@ -52,7 +52,7 @@ const JobListTemplate = ({ jobs, page, handleChangePage, totalPages }) => {
                     fontFamily: "Poppins",
                     fontSize: "0.9rem",
                   }}
-                  // onClick={() => handleClick(row.id)} // Puedes pasar la función handleClick si es necesario
+                  onClick={() => handleClickJob(job.id)} // Puedes pasar la función handleClick si es necesario
                 >
                   <TableCell component="th" scope="row">
                     {job.name}

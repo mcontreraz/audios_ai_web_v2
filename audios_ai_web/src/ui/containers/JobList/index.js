@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Importa useNavigate
 import JobListTemplate from "../../components/templates/JobList";
 import { jobListActions } from "../../../application/actions/jobList";
-import { transcriptedJobsActions } from "../../../application/actions/transcriptedJobs";
-import { convertirFormatoFecha } from "../../utils/functions";
+import { formatDate } from "../../utils/functions";
 
 const JobListContainer = () => {
-  const [open, setOpen] = useState(false);
-  const [page, setPage] = useState(1); // Comienza desde la página 1
+  const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Utiliza el hook useNavigate
 
   useEffect(() => {
     dispatch(jobListActions.fetchJobList());
   }, [dispatch]);
 
-  const jobsList = useSelector((state) => state.jobList.jobs.data);
+  const jobsList = useSelector((state) => state.jobList?.jobs?.data);
 
-  const jobs = jobsList.map((job) => ({
+  const jobs = jobsList?.map((job) => ({
     id: job.id,
     name: job.filename,
     status: job.status,
-    created_at: convertirFormatoFecha(job.created_at),
+    created_at: formatDate(job.created_at),
   }));
 
-  // Calcula el total de páginas
-  const totalPages = Math.ceil(jobs.length / rowsPerPage);
+  const totalPages = Math.ceil(jobs?.length / rowsPerPage);
 
-  const paginatedJobs = jobs.slice(
+  const paginatedJobs = jobs?.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
@@ -37,14 +35,22 @@ const JobListContainer = () => {
     setPage(value);
   };
 
+  // Modifica esta función para navegar y pasar el id como parámetro
+  const handleClickJob = (id) => {
+    // Aquí se realiza la navegación
+    navigate(`/jobResult/${id}`);
+
+  };
+
   return (
     <JobListTemplate
       jobs={paginatedJobs}
       page={page}
       rowsPerPage={rowsPerPage}
-      count={jobs.length}
-      totalPages={totalPages} // Pasas el total de páginas como prop
+      count={jobs?.length}
+      totalPages={totalPages}
       handleChangePage={handleChange}
+      handleClickJob={handleClickJob} // Asegúrate de pasar esta función al template
     />
   );
 };
