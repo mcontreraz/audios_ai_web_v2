@@ -18,7 +18,6 @@ const JobResultContainer = () => {
   }, [dispatch, id]);
 
 
-
   // Proporcionar un objeto vacío como valor por defecto si state.transcriptedJobs.data es null o undefined
   const transcriptedJob = useSelector(
     (state) => state?.transcriptedJobs?.data || {}

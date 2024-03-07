@@ -1,16 +1,7 @@
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  TableContainer,
-  Paper,
-} from "@mui/material";
+import CardComponent from "../../molecules/Card";
 
 import { formatDuration } from "../../../utils/functions";
-
-import { Wrapper } from "./styles";
 
 const JobResultTemplate = ({ jobResultData, analyzedJob }) => {
   let sentences = [];
@@ -39,72 +30,34 @@ const JobResultTemplate = ({ jobResultData, analyzedJob }) => {
       </div>
       <div className="row">
         <div className="col-8">
-          <TableContainer component={Paper}>
-            <Wrapper>
-              <Table
-                stickyHeader
-                aria-label="transcription table"
-                className="hover"
-                size="small"
-                style={{ maxHeight: "500px" }}
-              >
-                <TableBody>
-                  {sentences.map((sentence, index) => (
-                    <TableRow key={index} hover>
-                      <TableCell component="th" scope="row">
+          <CardComponent className="overflow-auto">
+            <div className="table table-striped" style={{ maxHeight: "450px" }}>
+              <div className="tbody">
+                {sentences &&
+                  sentences.map((sentence, index) => (
+                    <tr key={index}>
+                      <td>
                         {sentence.start ? formatDuration(sentence.start) : "-"}
-                      </TableCell>
-                      <TableCell>{sentence.sentence}</TableCell>
-                    </TableRow>
+                      </td>
+                      <td>{sentence.sentence}</td>
+                    </tr>
                   ))}
-                </TableBody>
-              </Table>
-            </Wrapper>
-          </TableContainer>
+              </div>
+            </div>
+          </CardComponent>
         </div>
         <div className="col-4">
-          <div className="card overflow-auto" style={{ maxHeight: "500px" }}>
-            <div className="card-body">
-              <p>{analyzedJob}</p>
-            </div>
-          </div>
+          <CardComponent>{analyzedJob}</CardComponent>
         </div>
       </div>
       <div className="row">
         <div className="col-12">
-          <div className="card mt-4">
+          <div className="card mt-4 shadow">
             <div className="card-body">Reproductor web</div>
           </div>
         </div>
       </div>
     </div>
-    // <div className="container">
-    //   <div className="row">
-    //     <div className="col-8 mt-4">
-
-    //       <div className="row">
-    //         <div className="col-8">
-
-    //         </div>
-
-    //         <div className="col-4">
-    //           <div
-    //             className="card overflow-auto"
-    //             style={{ maxHeight: "500px" }}
-    //           >
-    //             <div className="card-body">{analyzedJob}</div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-
-    //     <div className="col-12">
-    //       <div className="card mt-4">
-    //         <div className="card-body">Reproductor web</div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 
