@@ -5,13 +5,11 @@ import CardComponent from "../../molecules/Card";
 import { formatDuration } from "../../../utils/functions";
 
 import { Wrapper } from "./styles";
-import PlayButton from "../../atoms/PlayButton";
-import ReverseButton from "../../atoms/ReverseButton";
-import FastForwardButton from "../../atoms/FastForwardButton";
-import AudioSlider from "../../atoms/AudioSlider";
+
+import ReactAudioPlayer from 'react-audio-player';
 
 
-const JobResultTemplate = ({ jobResultData, analyzedJob }) => {
+const JobResultTemplate = ({ jobResultData, analyzedJob, audioPlayerRef, handleRowClick }) => {
   let sentences = [];
 
   try {
@@ -50,7 +48,7 @@ const JobResultTemplate = ({ jobResultData, analyzedJob }) => {
                 <tbody>
                   {sentences &&
                     sentences.map((sentence, index) => (
-                      <tr key={index}>
+                      <tr key={index} onClick={() => handleRowClick((sentence.start)-1)}>
                         <td>
                           {sentence.start
                             ? formatDuration(sentence.start)
@@ -71,10 +69,17 @@ const JobResultTemplate = ({ jobResultData, analyzedJob }) => {
           <div className="col-12 mt-2">
             <CardComponent>
               <div className="row justify-content-center">
-                <AudioSlider value={0} onChange={(value) => console.log(value)} />
+                {/* <AudioSlider value={0} onChange={(value) => console.log(value)} />
                 <ReverseButton className={'reverse-button'}/>
                 <PlayButton />
-                <FastForwardButton />
+                <FastForwardButton /> */}
+
+                <ReactAudioPlayer
+                  src={'/audios/' + jobResultData.job_id}
+                  ref={audioPlayerRef}
+                  controls
+                />
+
               </div>
             </CardComponent>
           </div>

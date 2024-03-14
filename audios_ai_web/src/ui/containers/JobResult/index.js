@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import JobResultTemplate from "../../components/templates/JobResult";
 import { useParams } from "react-router-dom";
@@ -7,10 +7,17 @@ import { analyzedJobsActions } from "../../../application/actions/analyzedJobs";
 
 const JobResultContainer = () => {
 
-  const [isPlaying, setIsPlaying] = useState(false);
-
   const id = useParams().id;
+
   const dispatch = useDispatch();
+
+  const audioPlayerRef = useRef(null);
+
+  const handleRowClick = (startTime) => {
+    if (audioPlayerRef.current) {
+      audioPlayerRef.current.audioEl.current.currentTime = startTime;
+    }
+  };
 
   useEffect(() => {
     dispatch(transcriptedJobsActions.fetchTranscriptedJobById(id));
@@ -31,40 +38,13 @@ const JobResultContainer = () => {
     (state) => state?.analyzedJobs?.job.data?.ai_json_analysis || null
   );
 
-  const audioRef = `$(
-    /Users/mcontreras/Documents/projects/transcribe_api_v3/audios/${audioTrackName})`;
-
-  // Controladores para el reproductor de audio
-  const handlePlayPause = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  const handleSkipTo = (time) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = time;
-      if (!isPlaying) {
-        audioRef.current.play();
-        setIsPlaying(true);
-      }
-    }
-  };
 
   return (
     <JobResultTemplate
       jobResultData={transcriptedJob}
-      handlePlayPause={handlePlayPause}
-      handleSkipTo={handleSkipTo}
-      isPlaying={isPlaying}
-      audioRef={audioRef}
-      audioTrackName={audioTrackName}
       analyzedJob={analyzedJob}
+      audioPlayerRef={audioPlayerRef}
+      handleRowClick={handleRowClick}
     />
   );
 };

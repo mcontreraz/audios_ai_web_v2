@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   .card-body {
-    max-height: 450px;
+    max-height: 75vh;
   }
 
   .result-table {
