@@ -18,6 +18,23 @@ function fetchJobsError(state, action) {
     state.jobs.success = false;
 }
 
+function fetchJobById(state, action) {
+    state.jobsById.loading = true;
+}
+
+function fetchJobByIdSuccess(state, action) {
+    state.jobsById.data = action.payload;
+    state.jobsById.loading = false;
+    state.jobsById.success = true;
+}
+
+function fetchJobByIdError(state, action) {
+    state.jobsById.error = action.payload;
+    state.jobsById.loading = false;
+    state.jobsById.success = false;
+}
+
+
 // Crear una acción adicional si es necesario para disparar el proceso de carga de la lista de trabajos.
 const fetchJobList = createAction("fetchJobList");
 
@@ -27,7 +44,10 @@ const jobListSlice = createSlice({
     reducers: {
         fetchJobs,
         fetchJobsSuccess,
-        fetchJobsError
+        fetchJobsError,
+        fetchJobById,
+        fetchJobByIdSuccess,
+        fetchJobByIdError,
     }
 });
 

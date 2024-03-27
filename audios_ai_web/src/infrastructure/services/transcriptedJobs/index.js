@@ -10,7 +10,7 @@ export function* fetchTranscriptedJobById(action) {
   try {
     const transcriptedJob = yield call(
       apiTranscriptedJobs.get,
-      `/transcripted-jobs/${action.payload}`
+      `/transcription-result/${action.payload}`
     );
     yield put(
       transcriptedJobsActions.fetchTranscriptedJobByIdSuccess(transcriptedJob)

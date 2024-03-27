@@ -1,22 +1,22 @@
 import React from "react";
 import { Table } from "reactstrap";
 import CardComponent from "../../molecules/Card";
+import { Wrapper } from "./styles";
+import ReactAudioPlayer from "react-audio-player";
 
 import { formatDuration } from "../../../utils/functions";
 
-import { Wrapper } from "./styles";
-
-import ReactAudioPlayer from 'react-audio-player';
-
-
-const JobResultTemplate = ({ jobResultData, analyzedJob, audioPlayerRef, handleRowClick }) => {
-  let sentences = [];
+const JobResultTemplate = ({
+  jobResultData,
+  analyzedJob,
+  audioPlayerRef,
+  handleRowClick,
+  fileData,
+}) => {
+  let phrase_result = [];
 
   try {
-    const transcriptionObject = jobResultData.transcription
-      ? JSON.parse(jobResultData.transcription)
-      : null;
-    sentences = transcriptionObject ? transcriptionObject.sentences : [];
+    phrase_result = jobResultData.phrase_result || [];
   } catch (error) {
     console.error("Error parsing jobResultData.transcription:", error);
   }
@@ -26,7 +26,7 @@ const JobResultTemplate = ({ jobResultData, analyzedJob, audioPlayerRef, handleR
       <div className="container">
         <div className="row">
           <div className="col-12 mt-2">
-            <span>Archivo: {jobResultData.job_id}</span>
+            <span>Archivo: {fileData.filename}</span>
             <p>
               Duracion:{" "}
               {jobResultData.duration
@@ -46,15 +46,18 @@ const JobResultTemplate = ({ jobResultData, analyzedJob, audioPlayerRef, handleR
                   </tr>
                 </thead>
                 <tbody>
-                  {sentences &&
-                    sentences.map((sentence, index) => (
-                      <tr key={index} onClick={() => handleRowClick((sentence.start)-1)}>
+                  {phrase_result &&
+                    phrase_result.map((sentence, index) => (
+                      <tr
+                        key={index}
+                        onClick={() => handleRowClick(sentence.start / 1000)}
+                      >
                         <td>
                           {sentence.start
                             ? formatDuration(sentence.start)
                             : "-"}
                         </td>
-                        <td>{sentence.sentence}</td>
+                        <td>{sentence.phrase}</td>
                       </tr>
                     ))}
                 </tbody>
@@ -75,11 +78,10 @@ const JobResultTemplate = ({ jobResultData, analyzedJob, audioPlayerRef, handleR
                 <FastForwardButton /> */}
 
                 <ReactAudioPlayer
-                  src={'/audios/' + jobResultData.job_id}
+                  src={"/audios/" + fileData.filename}
                   ref={audioPlayerRef}
                   controls
                 />
-
               </div>
             </CardComponent>
           </div>

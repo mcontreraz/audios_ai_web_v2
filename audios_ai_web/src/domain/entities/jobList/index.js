@@ -5,6 +5,12 @@ const initState = {
         loading: false,
         success: false,
         error: false
+    },
+    jobsById : {
+        data: [],
+        loading: false,
+        success: false,
+        error: false
     }
 }
 

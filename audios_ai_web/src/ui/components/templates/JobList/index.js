@@ -40,7 +40,7 @@ const JobListTemplate = ({ jobs, page, handleChangePage, totalPages, handleClick
               </TableRow>
             </TableHead>
             <TableBody>
-              {jobs.map((job) => (
+              {jobs?.map((job) => (
                 <TableRow
                   className="table-row"
                   key={job.id}
@@ -52,7 +52,7 @@ const JobListTemplate = ({ jobs, page, handleChangePage, totalPages, handleClick
                     fontFamily: "Poppins",
                     fontSize: "0.9rem",
                   }}
-                  onClick={() => handleClickJob(job.id)} // Puedes pasar la función handleClick si es necesario
+                  onClick={() => handleClickJob(job.job_id)} // Paso el job_id por parametro a la función handleClickJob
                 >
                   <TableCell component="th" scope="row">
                     {job.name}

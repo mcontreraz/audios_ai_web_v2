@@ -4,9 +4,9 @@ import JobResultTemplate from "../../components/templates/JobResult";
 import { useParams } from "react-router-dom";
 import { transcriptedJobsActions } from "../../../application/actions/transcriptedJobs";
 import { analyzedJobsActions } from "../../../application/actions/analyzedJobs";
+import { jobListActions } from "../../../application/actions/jobList";
 
 const JobResultContainer = () => {
-
   const id = useParams().id;
 
   const dispatch = useDispatch();
@@ -22,27 +22,25 @@ const JobResultContainer = () => {
   useEffect(() => {
     dispatch(transcriptedJobsActions.fetchTranscriptedJobById(id));
     dispatch(analyzedJobsActions.fetchAnaliyzedJobById(id));
+    dispatch(jobListActions.fetchJobById(id));
   }, [dispatch, id]);
-
 
   // Proporcionar un objeto vacío como valor por defecto si state.transcriptedJobs.data es null o undefined
   const transcriptedJob = useSelector(
     (state) => state?.transcriptedJobs?.data || {}
   );
 
-  const audioTrackName = useSelector(
-    (state) => state?.transcriptedJobs?.data?.job_id || {}
-  );
-
   const analyzedJob = useSelector(
     (state) => state?.analyzedJobs?.job.data?.ai_json_analysis || null
   );
 
+  const fileData = useSelector((state) => state?.jobList?.jobsById?.data);
 
   return (
     <JobResultTemplate
       jobResultData={transcriptedJob}
       analyzedJob={analyzedJob}
+      fileData={fileData}
       audioPlayerRef={audioPlayerRef}
       handleRowClick={handleRowClick}
     />

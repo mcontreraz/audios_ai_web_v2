@@ -15,13 +15,13 @@ const JobListContainer = () => {
     dispatch(jobListActions.fetchJobList());
   }, [dispatch]);
 
-  const jobsList = useSelector((state) => state.jobList?.jobs?.data);
+  const jobsList = useSelector((state) => state?.jobList?.jobs?.data);
 
   const jobs = jobsList?.map((job) => ({
-    id: job.id,
+    job_id: job.job_id,
     name: job.filename,
     status: job.status,
-    created_at: formatDate(job.created_at),
+    created_at: formatDate(job?.postedAt),
   }));
 
   const totalPages = Math.ceil(jobs?.length / rowsPerPage);
@@ -39,7 +39,6 @@ const JobListContainer = () => {
   const handleClickJob = (id) => {
     // Aquí se realiza la navegación
     navigate(`/jobResult/${id}`);
-
   };
 
   return (

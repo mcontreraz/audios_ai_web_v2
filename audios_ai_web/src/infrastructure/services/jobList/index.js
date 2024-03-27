@@ -1,24 +1,34 @@
-import { put, call, takeLatest, spawn } from 'redux-saga/effects';
+import { put, call, takeLatest, spawn } from "redux-saga/effects";
 
 // Importa las acciones específicas de éxito y error
-import { jobListActions } from '../../../application/actions/jobList'; 
+import { jobListActions } from "../../../application/actions/jobList";
 
 // Importación de la API
-import api from '../../../infrastructure/api';
+import api from "../../../infrastructure/api";
 
 // Acceder a la variable de entorno correctamente
 const apiJobList = api(process.env.REACT_APP_TRANSCRIBE_API);
 
 export function* fetchJobList() {
-    try {
-        const jobList = yield call(apiJobList.get, '/jobs-list');
-        yield put(jobListActions.fetchJobsSuccess(jobList)); // Usa la acción de éxito correcta
-    } catch (error) {
-        yield put(jobListActions.fetchJobsError(error.toString())); // Usa la acción de error correcta
-    }
+  try {
+    const jobList = yield call(apiJobList.get, "/job-list");
+    yield put(jobListActions.fetchJobsSuccess(jobList)); // Usa la acción de éxito correcta
+  } catch (error) {
+    yield put(jobListActions.fetchJobsError(error.toString())); // Usa la acción de error correcta
+  }
+}
+
+export function* fetchJobById(action) {
+  try {
+    const jobList = yield call(apiJobList.get, `/job-list/${action.payload}`);
+    yield put(jobListActions.fetchJobByIdSuccess(jobList));
+  } catch (error) {
+    yield put(jobListActions.fetchJobByIdError(error.toString()));
+  }
 }
 
 function* watchFetchJobList() {
+  yield takeLatest(jobListActions.fetchJobById, fetchJobById);
   yield takeLatest(jobListActions.fetchJobList, fetchJobList);
 }
 
